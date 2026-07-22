@@ -27,7 +27,7 @@ public class AccountService {
         return account.getBalance();
     }
 
-    public AccountResponse deposit(EventRequest request) {
+    public synchronized AccountResponse deposit(EventRequest request) {
         validateAmount(request.getAmount());
 
         Account account = repository.findById(request.getDestination())
@@ -44,7 +44,7 @@ public class AccountService {
                 .build();
     }
 
-    public AccountResponse withdraw(EventRequest request) {
+    public synchronized AccountResponse withdraw(EventRequest request) {
         validateAmount(request.getAmount());
 
         Account account = getAccount(request.getOrigin());
