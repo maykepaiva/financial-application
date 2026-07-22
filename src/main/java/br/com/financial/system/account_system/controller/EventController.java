@@ -2,6 +2,7 @@ package br.com.financial.system.account_system.controller;
 
 import br.com.financial.system.account_system.dto.AccountResponse;
 import br.com.financial.system.account_system.dto.EventRequest;
+import br.com.financial.system.account_system.exception.InvalidEventTypeException;
 import br.com.financial.system.account_system.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class EventController {
                     accountService.transfer(request);
 
             default ->
-                    throw new IllegalArgumentException("Invalid event type");
+                    throw new InvalidEventTypeException(request.getType());
         };
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
